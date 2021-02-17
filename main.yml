@@ -1,0 +1,33 @@
+---
+- hosts: pi
+  tasks:
+      - name: Setup locales
+        locale_gen:
+          name: en_US.UTF-8
+          state: present
+      - name: Set timezone
+        timezone:
+          name: Europe/Bucharest
+    - name: Ensure package install
+      become: true
+      apt:
+        name: python3-gpiozero
+        state: latest
+        update_cache: yes
+    - name: Copy fancontrol py file
+      copy:
+        src: 'fancontrol.py'
+        force: false
+        dest: /usr/local/bin/
+        mode: +x
+    - name: Copy fancontrol sh file
+      copy:
+        src: 'fancontrol.sh'
+        force: false
+        dest: /etc/init.d/
+        mode: +x
+    - name: Add fancontroll as daemon
+      become: true
+      command: update-rc.d fancontrol.sh defaults
+  roles:
+      - geerlingguy.docker
