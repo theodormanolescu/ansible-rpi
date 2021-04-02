@@ -1,12 +1,12 @@
 ---
 - hosts: pi
   tasks:
-      - name: Setup locales
-        locale_gen:
+    - name: Setup locales
+      locale_gen:
           name: en_US.UTF-8
           state: present
-      - name: Set timezone
-        timezone:
+    - name: Set timezone
+      timezone:
           name: Europe/Bucharest
     - name: Ensure package install
       become: true
@@ -26,8 +26,10 @@
         force: false
         dest: /etc/init.d/
         mode: +x
-    - name: Add fancontroll as daemon
+
+    - name: Run fancontrol on restart
       become: true
-      command: update-rc.d fancontrol.sh defaults
-  roles:
-      - geerlingguy.docker
+      cron:
+        name: "a job for reboot"
+        special_time: reboot
+        job: "/etc/init.d/fancontrol.sh start"

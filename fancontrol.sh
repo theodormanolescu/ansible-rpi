@@ -2,6 +2,8 @@
 
 case "$1" in
   start)
+    sleep 20
+    chmod og+rwx "/dev/gpio*"
     echo "Starting fancontrol.py"
     /usr/local/bin/fancontrol.py &
     ;;

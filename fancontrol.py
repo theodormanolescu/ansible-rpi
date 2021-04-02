@@ -4,8 +4,8 @@ import time
 
 from gpiozero import OutputDevice
 
-ON_THRESHOLD = 60
-OFF_THRESHOLD = 50
+ON_THRESHOLD = 65
+OFF_THRESHOLD = 55
 SLEEP_INTERVAL = 10
 GPIO_PIN = 14
 
