@@ -5,9 +5,6 @@
       locale_gen:
           name: en_US.UTF-8
           state: present
-    - name: Set timezone
-      timezone:
-          name: Europe/Bucharest
     - name: Ensure package install
       become: true
       apt:
@@ -15,12 +12,14 @@
         state: latest
         update_cache: yes
     - name: Copy fancontrol py file
+      become: true
       copy:
         src: 'fancontrol.py'
         force: false
         dest: /usr/local/bin/
         mode: +x
     - name: Copy fancontrol sh file
+      become: true
       copy:
         src: 'fancontrol.sh'
         force: false
